@@ -481,11 +481,15 @@ In any case, you will get a warning about the outer variable being shadowed.
 Checked or Unchecked Arithmetic
 ===============================
 
+An overflow or underflow is the situation where the resulting value of an arithmetic operation,
+when executed on an unrestricted integer, falls outside the range of the result type.
+
 Prior to Solidity 0.8.0, arithmetic operations would always wrap in case of
-under- or overflow leading to widespread use of libraries that would introduce
+under- or overflow leading to widespread use of libraries that introduce
 additional checks.
 
-Since Solidity 0.8.0, all arithmetic operations revert on over- and underflow by default.
+Since Solidity 0.8.0, all arithmetic operations revert on over- and underflow by default,
+thus making the use of these libraries unnecessary.
 
 To obtain the previous behaviour, an ``unchecked`` block can be used:
 
@@ -515,9 +519,6 @@ Functions called from within an ``unchecked`` block do not inherit the property.
 
 .. note::
     To avoid ambiguity, you cannot use ``_;`` inside an ``unchecked`` block.
-
-An overflow or underflow is the situation where the resulting value of an arithmetic operation,
-when executed on an unrestricted integer, falls outside the range of the result type.
 
 The following operators will cause a failing assertion on overflow or underflow
 and will wrap without an error if used inside an unchecked block:

@@ -275,7 +275,7 @@ bool ExpressionCompiler::visit(Assignment const& _assignment)
 		solAssert(*_assignment.annotation().type == leftType, "");
 	bool cleanupNeeded = false;
 	if (op != Token::Assign)
-		cleanupNeeded = m_context.arithmetic() == Arithmetic::Checked || cleanupNeededForOp(leftType.category(), binOp);
+		cleanupNeeded = cleanupNeededForOp(leftType.category(), binOp);
 	_assignment.rightHandSide().accept(*this);
 	// Perform some conversion already. This will convert storage types to memory and literals
 	// to their actual type, but will not convert e.g. memory to storage.
@@ -479,7 +479,7 @@ bool ExpressionCompiler::visit(BinaryOperation const& _binaryOperation)
 		m_context << commonType->literalValue(nullptr);
 	else
 	{
-		bool cleanupNeeded = m_context.arithmetic() == Arithmetic::Checked || cleanupNeededForOp(commonType->category(), c_op);
+		bool cleanupNeeded = cleanupNeededForOp(commonType->category(), c_op);
 
 		TypePointer leftTargetType = commonType;
 		TypePointer rightTargetType =
